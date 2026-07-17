@@ -75,7 +75,7 @@ class King
           return true
         end
       end
-    elsif @team == "w" && chessboard[7][0] == Rook
+    elsif @team == "w" && chessboard[7][0].class == Rook
       if @move_count == 0 && chessboard[7][0].move_count == 0
         if chessboard[7][1].nil? && chessboard[7][2].nil? && chessboard[7][3].nil?
           return true
