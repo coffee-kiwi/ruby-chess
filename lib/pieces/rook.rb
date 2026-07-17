@@ -22,10 +22,10 @@ class Rook < Pieces
     downwards.each { |val| all_possible_moves << val unless val == [] }
     left.each { |val| all_possible_moves << val unless val == [] }
     if castle_left?(chessboard)
-      all_possible_moves << ["castleleft"]
+      all_possible_moves << "castleleft"
     end
     if castle_right?(chessboard)
-      all_possible_moves << ["castleright"]
+      all_possible_moves << "castleright"
     end
 
     all_possible_moves

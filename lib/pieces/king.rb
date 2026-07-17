@@ -26,10 +26,10 @@ class King
     end
     
     if castle_left?(chessboard)
-      new_positions << ["castleleft"]
+      new_positions << "castleleft"
     end
     if castle_right?(chessboard)
-      new_positions << ["castleright"]
+      new_positions << "castleright"
     end
     new_positions
   end
