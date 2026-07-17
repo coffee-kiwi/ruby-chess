@@ -18,6 +18,8 @@ class Board
     @chessboard = Array.new(9) { Array.new(9) }
     @remaining_white = []
     @remaining_black = []
+    @en_passant_b = nil
+    @en_passant_w = nil
     @player = "w"
   end
 
