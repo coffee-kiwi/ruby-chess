@@ -44,21 +44,21 @@ RSpec.describe Board do
   describe 'checking for check' do 
     subject(:board) { Board.new }
     context 'will find check when it is true' do
-      xit 'finds check from rook' do
+      it 'finds check from rook' do
         board.chessboard[3][3] = King.new("b", [3,3])
         board.remaining_black << board.chessboard[3][3]
         board.chessboard[3][7] = Rook.new("w", [3,7])
         board.remaining_white << board.chessboard[3][7]
-        value = board.check("b")
+        value = board.check(board.chessboard)
         expect(value).to be(true)
       end
 
-      xit 'returns false with no check' do
+      it 'returns false with no check' do
         board.chessboard[3][3] = King.new("b", [3,3])
         board.remaining_black << board.chessboard[3][3]
         board.chessboard[4][7] = Rook.new("w", [4,7])
         board.remaining_white << board.chessboard[4][7]
-        value = board.check("b")
+        value = board.check(board.chessboard)
         expect(value).to be(false)
       end
 
