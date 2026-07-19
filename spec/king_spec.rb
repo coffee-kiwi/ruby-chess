@@ -11,7 +11,7 @@ RSpec.describe King do
     subject(:king_two) { King.new("w", [6,4]) }
     subject(:board) { Board.new }
     context 'will return legal moves' do
-      xit 'Can return no moves on the first turn' do
+      it 'Can return no moves on the first turn' do
         board.chessboard[7][3] = King.new("w", [7,3])
         board.chessboard[7][5] = King.new("w", [7,5])
         board.chessboard[6][3] = King.new("w", [6,3])
@@ -20,12 +20,12 @@ RSpec.describe King do
         moves = king.movement(board.chessboard)
         expect(moves).to eql([])
       end
-      xit 'Can return moves in all directions if no pieces surround it' do
+      it 'Can return moves in all directions if no pieces surround it' do
         moves = king_two.movement(board.chessboard)
         expect(moves).to eql([[5,4], [5,5], [6,5], [7,5], [7,4], [7,3], [6,3], [5,3]])
       end
 
-      xit 'Can return array of capturable pieces' do
+      it 'Can return array of capturable pieces' do
         board.chessboard[7][3] = King.new("b", [7,3])
         board.chessboard[7][5] = King.new("w", [7,5])
         board.chessboard[6][3] = King.new("b", [6,3])
@@ -37,15 +37,15 @@ RSpec.describe King do
     end
 
     context 'Castling' do
-      xit 'Can find whether castling is a legal move' do
+      it 'Can find whether castling is a legal move' do
         king = King.new("w", [7,4])
         rook = Rook.new("w", [7,0])
         board.chessboard[7][4] = king
         board.chessboard[7][0] = rook
         moves = king.movement(board.chessboard)
-        expect(moves).to include(["castleleft"])
+        expect(moves).to include("castleleft")
       end
-      xit 'Can correctly castle to the left' do
+      it 'Can correctly castle to the left' do
         king = King.new("w", [7,4])
         rook = Rook.new("w", [7,0])
         rook2 = Rook.new("w", [0,7])
@@ -55,7 +55,7 @@ RSpec.describe King do
         board.castling("castleleft", king)
         expect(king.position).to eql([7,0])
       end
-      xit 'Can correctly castle to the right' do
+      it 'Can correctly castle to the right' do
         king = King.new("b", [0,4])
         rook = Rook.new("b", [0,7])
         rook2 = Rook.new("b", [0,0])

@@ -12,28 +12,28 @@ RSpec.describe Rook do
     subject(:board) { Board.new }
     subject(:board_castling) { Board.new }
     context 'will return legal moves under basic circumstances' do
-      xit 'can move in a straight line to the left' do
+      it 'can move in a straight line to the left' do
         board.chessboard[3][0] = Rook.new("w", [3,0])
         moves = rook_mid.left_check(board.chessboard)
         expect(moves).to eql([[3,2], [3,1]])
       end
-      xit 'can move in a straight line to the right' do
+      it 'can move in a straight line to the right' do
         board.chessboard[3][6] = Rook.new("w", [3,6])
         moves = rook_mid.right_check(board.chessboard)
         expect(moves).to eql([[3,4], [3,5]])
       end
-      xit 'can move in a straight line downwards' do
+      it 'can move in a straight line downwards' do
         board.chessboard[7][3] = Rook.new("w", [7,3])
         moves = rook_mid.down_check(board.chessboard)
         expect(moves).to eql([[4,3], [5,3], [6,3]])
       end
-      xit 'can move in a straight line up' do
+      it 'can move in a straight line up' do
         board.chessboard[1][3] = Rook.new("w", [1,3])
         moves = rook_mid.up_check(board.chessboard)
         expect(moves).to eql([[2,3]])
       end
 
-      xit 'will return values in multiple directions' do
+      it 'will return values in multiple directions' do
         board.chessboard[3][0] = Rook.new("w", [3,0])
         board.chessboard[1][3] = Rook.new("w", [1,3])
         board.chessboard[3][6] = Rook.new("w", [3,6])
@@ -44,7 +44,7 @@ RSpec.describe Rook do
     
     end
     context 'capturing enemy pieces' do 
-      xit 'can return an array of enemy pieces' do
+      it 'can return an array of enemy pieces' do
         board.chessboard[3][0] = Rook.new("b", [3,0])
         board.chessboard[3][6] = Rook.new("b", [3,6])
         board.chessboard[1][3] = Rook.new("w", [1,3])
@@ -54,13 +54,13 @@ RSpec.describe Rook do
     end
 
     context 'Castling' do
-      xit 'Can find whether castling is a legal move' do
+      it 'Can find whether castling is a legal move' do
         king1 = King.new("w", [7,4])
         rook2 = Rook.new("w", [7,0])
         board_castling.chessboard[7][4] = king1
         board_castling.chessboard[7][0] = rook2
         moves = rook.movement(board_castling.chessboard)
-        expect(moves).to include(["castleleft"])
+        expect(moves).to include("castleleft")
       end
       it 'Can correctly castle to the left' do
         king = King.new("w", [7,4])
