@@ -302,7 +302,6 @@ class Board
       piece.position = player_next
       board[original_position[0]][original_position[1]] = nil
     elsif capture.include?(player_next)
-      binding.pry
       if board[player_next[0]][player_next[1]].team == "w"
         @captured_piece = board[player_next[0]][player_next[1]]
         board[player_next[0]][player_next[1]] = piece
