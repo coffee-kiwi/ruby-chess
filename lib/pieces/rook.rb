@@ -26,13 +26,13 @@ class Rook < Pieces
   end
 
   def castle_right?(chessboard)
-    if @team == "b" && chessboard[0][4] != nil && chessboard[0][4].class == King
+    if @team == "b" && chessboard[0][4] && chessboard[0][4].class == King
       if @move_count == 0 && chessboard[0][4].move_count == 0
         if chessboard[0][5].nil? && chessboard[0][6].nil?
           return true
         end
       end
-    elsif @team == "w" && chessboard[7][4] != nil && chessboard[7][4].class == King
+    elsif @team == "w" && chessboard[7][4] && chessboard[7][4].class == King
       if @move_count == 0 && chessboard[7][4].move_count == 0
         if chessboard[7][5].nil? && chessboard[7][6].nil?
           return true
@@ -43,13 +43,13 @@ class Rook < Pieces
   end
 
   def castle_left?(chessboard)
-    if @team == "b" && chessboard[0][4] != nil && chessboard[0][4].class == King
+    if @team == "b" && chessboard[0][4] && chessboard[0][4].class == King
       if @move_count == 0 && chessboard[0][4].move_count == 0
         if chessboard[0][1].nil? && chessboard[0][2].nil? && chessboard[0][3].nil?
           return true
         end
       end
-    elsif @team == "w" && chessboard[7][4] != nil && chessboard[7][4].class == King
+    elsif @team == "w" && chessboard[7][4] && chessboard[7][4].class == King
       if @move_count == 0 && chessboard[7][4].move_count == 0
         if chessboard[7][1].nil? && chessboard[7][2].nil? && chessboard[7][3].nil?
           return true

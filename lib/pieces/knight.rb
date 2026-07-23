@@ -35,7 +35,7 @@ class Knight
       new_row = row + x
       new_col = col + y
       if new_row.between?(0,7) && new_col.between?(0,7)
-        if chessboard[new_row][new_col] != nil
+        if chessboard[new_row][new_col]
           enemy_pieces << [new_row, new_col] if chessboard[new_row][new_col].team != @team
         end
       end

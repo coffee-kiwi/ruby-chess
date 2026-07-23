@@ -67,9 +67,9 @@ class Board
     @chessboard.each do |row|
       row.each do |val|
         if !val.is_a?(String)
-          if val != nil && val.team == "w"
+          if val && val.team == "w"
           @remaining_white << val
-          elsif val != nil && val.team == "b"
+          elsif val && val.team == "b"
           @remaining_black << val
           end 
         end
@@ -127,7 +127,7 @@ class Board
         return "save"
       end
       chosen_piece = @chessboard[chosen_piece_position[0]][chosen_piece_position[1]]
-      if chosen_piece != nil && chosen_piece.team == @player
+      if chosen_piece && chosen_piece.team == @player
         players_piece = true
       end
     end
@@ -324,7 +324,7 @@ class Board
   def check(board)
     if @player == "w"
       remaining_black = @remaining_black.clone
-      if @captured_piece != nil && @captured_piece.team == "b"
+      if @captured_piece && @captured_piece.team == "b"
         remaining_black.delete(@captured_piece)
       end
       enemy_range = []
@@ -340,7 +340,7 @@ class Board
       end
     else
       remaining_white = @remaining_white.clone
-      if @captured_piece != nil && @captured_piece.team == "w"
+      if @captured_piece && @captured_piece.team == "w"
         remaining_white.delete(@captured_piece)
       end
       enemy_range = []
