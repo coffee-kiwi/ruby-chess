@@ -66,7 +66,7 @@ class Board
     @remaining_white = []
     @chessboard.each do |row|
       row.each do |val|
-        if val.is_a?(String) == false
+        if !val.is_a?(String)
           if val != nil && val.team == "w"
           @remaining_white << val
           elsif val != nil && val.team == "b"
@@ -120,7 +120,7 @@ class Board
     else
       puts "It is now black's turn to move"
     end
-    until players_piece == true
+    until players_piece
       puts "Select one of your pieces to move"
       chosen_piece_position = next_move
       if chosen_piece_position == "save"
@@ -204,7 +204,7 @@ class Board
       # Evaluate if castling is possible or not..
       if move == "castleleft" || move == "castleright"
         
-        if castling_test(move, piece, copy_board) == false
+        if !castling_test(move, piece, copy_board)
           illegal_move = true
         else
           illegal_move = check(copy_board)
@@ -359,7 +359,7 @@ class Board
 
   def still_in_check?
     still_in_check = true
-    until still_in_check == false
+    until !still_in_check
       copy_board = @chessboard.map(&:clone)
       puts "You are in check."
       chosen_piece = choose_move
@@ -371,7 +371,7 @@ class Board
       capture = capture_by_type(chosen_piece, copy_board)
       execute_move(player_next, chosen_piece, copy_board, capture)
 
-      if check(copy_board) == false
+      if !check(copy_board)
         still_in_check = false
         update_remaining_pieces
         @chessboard = copy_board
@@ -399,7 +399,7 @@ class Board
         all_moves.each do |move|
           copy_board = @chessboard.map(&:clone)
           execute_move(move, piece, copy_board, capture)
-          if check(copy_board) == true
+          if check(copy_board)
             piece.position = original_position
             next
           else
@@ -422,7 +422,7 @@ class Board
           copy_board = @chessboard.map(&:clone)
            
           execute_move(move, piece, copy_board, capture)
-          if check(copy_board) == true
+          if check(copy_board)
             piece.position = original_position
             next
           else

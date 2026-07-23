@@ -33,7 +33,7 @@ end
 check = false
 checkmate = false
 puts "Note that you can save at anytime by inputting 'save' during your turn"
-until checkmate == true
+until checkmate
   board.display_board
   check = board.check(chessboard)
   if check
@@ -42,7 +42,7 @@ until checkmate == true
         board.save(board, "one")
         next
       end
-  elsif check == false && checkmate == false
+  elsif !check && !checkmate
       turn = board.players_move
       if turn == "save"
         board.save(board, "one")
