@@ -34,7 +34,6 @@ RSpec.describe WhitePawn do
         board.chessboard[4][4] = BlackPawn.new("b", [4,4])
         capture = pawn_three.capturable(board.chessboard, @en_passant_b)
         expect(capture).to eql([[4,4]])
-
       end
     end
 

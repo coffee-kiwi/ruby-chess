@@ -159,8 +159,9 @@ class Board
 
   def capture_by_type(piece, board)
     case piece
+     
     when BlackPawn then capture = piece.capturable(board, @en_passant_w)
-    when WhitePawn then capture = piece.capturable(board, @en_passant_b)
+    when WhitePawn then  capture = piece.capturable(board, @en_passant_b)
     else capture = piece.capturable(board)
     end  
     capture
@@ -390,7 +391,6 @@ class Board
       end
       save_position = chosen_piece.position
       player_next = calculate_moves(chosen_piece)
-      binding.pry
       capture = capture_by_type(chosen_piece, copy_board)
       execute_move(player_next, chosen_piece, copy_board, capture)
 
@@ -410,7 +410,6 @@ class Board
 
   def in_checkmate?
       remaining_pieces(@player).each do |piece|
-        binding.pry
         original_position = piece.position
         moves = piece.movement(@chessboard)
         capture = capture_by_type(piece, @chessboard)
@@ -418,7 +417,6 @@ class Board
         all_moves = legal_move?(all_moves, piece)
          
         all_moves.each do |move|
-          binding.pry
           copy_board = @chessboard.map(&:clone)
           execute_move(move, piece, copy_board, capture)
           piece.position = original_position

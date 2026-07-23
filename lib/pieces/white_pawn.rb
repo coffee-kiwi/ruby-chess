@@ -39,7 +39,7 @@ class WhitePawn < Pieces
       capturable_pieces << [row - 1, col + 1] if right && right.team != @team
     elsif col == 7
       left = chessboard[row - 1][col - 1]
-      capturable_pieces << [row - 1, col + 1] if left && left.team != @team
+      capturable_pieces << [row - 1, col - 1] if left && left.team != @team
     end
     capturable_pieces
   end
