@@ -320,42 +320,60 @@ class Board
       @en_passant_b = [original_position[0] + 1, original_position[1]]
     end
   end
+
+  def opponent_color
+    @player == "w" ? "b" : "w"
+  end
+
+  def remaining_pieces(color)
+    color == "w" ? @remaining_white : @remaining_black
+  end
   
   def check(board)
-    if @player == "w"
-      remaining_black = @remaining_black.clone
-      if @captured_piece && @captured_piece.team == "b"
-        remaining_black.delete(@captured_piece)
-      end
-      enemy_range = []
-      w_king = @remaining_white.select { |piece| piece.piece == "king" } 
-      remaining_black.each do |piece|
-        piece_range = capture_by_type(piece, board)
-        piece_range.each { |pos| enemy_range << pos unless pos == []}
-      end
-      if enemy_range.include?(w_king[0].position)
-        return true
-      else
-        return false
-      end
-    else
-      remaining_white = @remaining_white.clone
-      if @captured_piece && @captured_piece.team == "w"
-        remaining_white.delete(@captured_piece)
-      end
-      enemy_range = []
-      b_king = @remaining_black.select { |piece| piece.piece == "king" }
-      remaining_white.each do |piece|
-        piece_range = capture_by_type(piece, board)
-        piece_range.each { |pos| enemy_range << pos unless pos == []}
-      end
-      if enemy_range.include?(b_king[0].position)
-        return true
-      else
-        return false
-      end
-    end
+    enemy_color = opponent_color
+    enemy_pieces = remaining_pieces(enemy_color).clone
+    enemy_pieces.delete(@captured_piece) if @captured_piece&.team == enemy_color
+
+    king = remaining_pieces(@player).find { |piece| piece.piece == "king" }
+
+    enemy_range = enemy_pieces.flat_map { |piece| capture_by_type(piece, board) }
+    enemy_range.include?(king.position)
+
   end
+    # if @player == "w"
+    #   remaining_black = @remaining_black.clone
+    #   if @captured_piece && @captured_piece.team == "b"
+    #     remaining_black.delete(@captured_piece)
+    #   end
+    #   enemy_range = []
+    #   w_king = @remaining_white.select { |piece| piece.piece == "king" } 
+    #   remaining_black.each do |piece|
+    #     piece_range = capture_by_type(piece, board)
+    #     piece_range.each { |pos| enemy_range << pos unless pos == []}
+    #   end
+    #   if enemy_range.include?(w_king[0].position)
+    #     return true
+    #   else
+    #     return false
+    #   end
+    # else
+    #   remaining_white = @remaining_white.clone
+    #   if @captured_piece && @captured_piece.team == "w"
+    #     remaining_white.delete(@captured_piece)
+    #   end
+    #   enemy_range = []
+    #   b_king = @remaining_black.select { |piece| piece.piece == "king" }
+    #   remaining_white.each do |piece|
+    #     piece_range = capture_by_type(piece, board)
+    #     piece_range.each { |pos| enemy_range << pos unless pos == []}
+    #   end
+    #   if enemy_range.include?(b_king[0].position)
+    #     return true
+    #   else
+    #     return false
+    #   end
+    # end
+  # end
 
   def still_in_check?
     still_in_check = true
@@ -386,55 +404,21 @@ class Board
   end
 
   def in_checkmate?
-    if @player == "w"
-      @remaining_white.each do |piece|
+      remaining_pieces(@player).each do |piece|
         original_position = piece.position
         moves = piece.movement(@chessboard)
         capture = capture_by_type(piece, @chessboard)
         all_moves = moves.concat(capture)
-        # Check if moves are legal or not:
-         
         all_moves = legal_move?(all_moves, piece)
          
         all_moves.each do |move|
           copy_board = @chessboard.map(&:clone)
           execute_move(move, piece, copy_board, capture)
-          if check(copy_board)
-            piece.position = original_position
-            next
-          else
-            piece.position = original_position
-            return false
-          end
+          piece.position = original_position
+          return false unless check(copy_board)
         end
       end
-    elsif @player == "b"
-      @remaining_black.each do |piece|
-        original_position = piece.position
-        moves = piece.movement(@chessboard)
-        capture = capture_by_type(piece, @chessboard)
-        all_moves = moves.concat(capture)
-        # Check if moves are legal or not:
-         
-        all_moves = legal_move?(all_moves, piece)
-         
-        all_moves.each do |move|
-          copy_board = @chessboard.map(&:clone)
-           
-          execute_move(move, piece, copy_board, capture)
-          if check(copy_board)
-            piece.position = original_position
-            next
-          else
-            piece.position = original_position
-            return false
-          end
-        end
-      end
-    end
-    
-    return true
-    
+      true
   end
 
   def reset_captured_piece
