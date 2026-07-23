@@ -4,6 +4,9 @@ class Rook < Pieces
 
   attr_reader :team, :piece
   attr_accessor :position, :move_count
+
+  STRAIGHTS = %i[ up down left right].freeze
+
   def initialize(team, position)
   @team = team
   @position = position
@@ -12,32 +15,14 @@ class Rook < Pieces
   end
 
   def movement(chessboard)
-    all_possible_moves = []
-    upwards = up_check(chessboard)
-    right = right_check(chessboard)
-    downwards = down_check(chessboard)
-    left = left_check(chessboard)
-    upwards.each { |val| all_possible_moves << val unless val == [] }
-    right.each { |val| all_possible_moves << val unless val == [] }
-    downwards.each { |val| all_possible_moves << val unless val == [] }
-    left.each { |val| all_possible_moves << val unless val == [] }
-    if castle_left?(chessboard)
-      all_possible_moves << "castleleft"
-    end
-    if castle_right?(chessboard)
-      all_possible_moves << "castleright"
-    end
-
-    all_possible_moves
+    moves = STRAIGHTS.flat_map { |dir| scan(chessboard, dir) }
+    moves << "castleleft" if castle_left?(chessboard)
+    moves << "castleright" if castle_right?(chessboard)
+    moves
   end
 
   def capturable(chessboard)
-    capture_pieces = []
-    capture_pieces << up_enemy_check(chessboard)
-    capture_pieces << left_enemy_check(chessboard)
-    capture_pieces << down_enemy_check(chessboard)
-    capture_pieces << right_enemy_check(chessboard)
-    capture_pieces.compact
+    STRAIGHTS.filter_map { |dir| scan_for_enemy(chessboard, dir) }
   end
 
   def castle_right?(chessboard)
