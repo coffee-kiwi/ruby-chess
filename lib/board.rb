@@ -165,7 +165,7 @@ class Board
     end  
     capture
   end
-
+  # Should not allow castling unless both pieces are on the same team..
   def players_move
     chosen_piece = choose_move
     if chosen_piece == "save"
@@ -201,12 +201,14 @@ class Board
       copy_board = @chessboard.map(&:clone)
       copy_remaining_black = @remaining_black.clone
       copy_remaining_white = @remaining_white.clone
-      if move == "castleleft"
-        castling_test("castleleft", piece, copy_board)
-        illegal_move = check(copy_board)
-      elsif move == "castleright"
-        castling_test("castleright", piece, copy_board)
-        illegal_move = check(copy_board)
+      # Evaluate if castling is possible or not..
+      if move == "castleleft" || move == "castleright"
+        
+        if castling_test(move, piece, copy_board) == false
+          illegal_move = true
+        else
+          illegal_move = check(copy_board)
+        end
       else
         capture = capture_by_type(piece, copy_board)
         execute_move(move, piece, copy_board, capture)
@@ -223,26 +225,29 @@ class Board
   end
 
   def castling_test(direction, piece, board)
-    if direction == "castleleft" && piece.team == "b"
+    if direction == "castleleft" && piece.team == "b" && board[0][0].team == "b"
       rook = board[0][0]
       king = board[0][4]
       board[0][0] = king
       board[0][4] = rook
-    elsif direction == "castleright" && piece.team == "b"
+    elsif direction == "castleright" && piece.team == "b"  && board[0][7].team == "b"
       rook = board[0][7]
       king = board[0][4]
       board[0][7] = king
       board[0][4] = rook
-    elsif direction == "castleleft" && piece.team == "w"
+    elsif direction == "castleleft" && piece.team == "w"  && board[7][0].team == "w"
       rook = board[7][0]
       king = board[7][4]
       board[7][0] = king
       board[7][4] = rook
-    elsif direction == "castleright" && piece.team == "w"
+    elsif direction == "castleright" && piece.team == "w" && board[7][7].team == "w"
       rook = board[7][7]
       king = board[7][4]
       board[7][7] = king
       board[7][4] = rook
+    else
+      
+      false
     end
   end
 
@@ -387,6 +392,10 @@ class Board
         moves = piece.movement(@chessboard)
         capture = capture_by_type(piece, @chessboard)
         all_moves = moves.concat(capture)
+        # Check if moves are legal or not:
+         
+        all_moves = legal_move?(all_moves, piece)
+         
         all_moves.each do |move|
           copy_board = @chessboard.map(&:clone)
           execute_move(move, piece, copy_board, capture)
@@ -405,8 +414,13 @@ class Board
         moves = piece.movement(@chessboard)
         capture = capture_by_type(piece, @chessboard)
         all_moves = moves.concat(capture)
+        # Check if moves are legal or not:
+         
+        all_moves = legal_move?(all_moves, piece)
+         
         all_moves.each do |move|
           copy_board = @chessboard.map(&:clone)
+           
           execute_move(move, piece, copy_board, capture)
           if check(copy_board) == true
             piece.position = original_position
@@ -418,6 +432,7 @@ class Board
         end
       end
     end
+    
     return true
     
   end

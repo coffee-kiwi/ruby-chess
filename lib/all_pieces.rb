@@ -1,5 +1,16 @@
 class Pieces
 
+  DIRECTIONS = {
+    up: [-1, 0],
+    down: [1, 0],
+    left: [0, -1],
+    right: [0, 1],
+    up_left: [-1, -1],
+    up_right: [-1, 1],
+    low_left: [1, -1],
+    low_right: [1, 1]
+}.freeze
+
   def left_check(chessboard)
     possible_moves = []
     row = @position[0]

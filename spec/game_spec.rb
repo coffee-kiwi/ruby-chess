@@ -12,12 +12,14 @@ require_relative '../lib/board'
 
 RSpec.describe Board do 
   describe 'basic chess moves' do 
+    subject(:board) {Board.new}
     context 'can make basic moves' do
-      xit 'players turn switches after every round' do
-        
+      it 'players turn switches after every round' do
+        board.change_player
+        expect(board.player).to eql("b")
       end
 
-      xit 'players select only possible moves' do
+      xit 'legal moves are displayed' do
         
       end
 
