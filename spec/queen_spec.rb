@@ -28,7 +28,7 @@ RSpec.describe Queen do
         board.chessboard[3][0] = Queen.new("w", [3,0])
         board.chessboard[0][0] = Queen.new("w", [0,0])
         moves = queen_mid.movement(board.chessboard)
-        expect(moves).to eql([[2,3], [1,3], [2,4], [4,4], [5,5], [4,3], [5,3], [6,3], [7,3], [4,2], [5,1], [3,2], [3,1], [2,2], [1,1]])
+        expect(moves).to eql([[2,3], [1,3], [4,3], [5,3], [6,3], [7,3], [3,2], [3,1], [2,2], [1,1], [2,4], [4,2], [5,1], [4,4], [5,5]])
       end
 
       it 'Can return array of capturable pieces' do
@@ -38,7 +38,7 @@ RSpec.describe Queen do
         board.chessboard[6][6] = Queen.new("w", [6,6])
         board.chessboard[0][0] = Queen.new("b", [0,0])
         capture = queen_mid.capturable(board.chessboard)
-        expect(capture).to eql([[0,3], [3,4],[1,5],[0,0]])
+        expect(capture).to eql([[0,3], [3,4],[0,0],[1,5]])
       end
     end
 

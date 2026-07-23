@@ -39,7 +39,7 @@ RSpec.describe Rook do
         board.chessboard[3][6] = Rook.new("w", [3,6])
         board.chessboard[6][3] = Rook.new("w", [6,3])
         moves = rook_mid.movement(board.chessboard)
-        expect(moves).to eql([[2,3], [3,4], [3,5], [4,3], [5,3], [3,2], [3,1]])
+        expect(moves).to eql([[2,3], [4,3], [5,3], [3,2], [3,1], [3,4], [3,5]])
       end
     
     end
