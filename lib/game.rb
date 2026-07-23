@@ -34,6 +34,7 @@ check = false
 checkmate = false
 puts "Note that you can save at anytime by inputting 'save' during your turn"
 until checkmate
+  board.update_remaining_pieces
   board.display_board
   check = board.check(chessboard)
   if check

@@ -301,6 +301,7 @@ class Board
       piece.position = player_next
       board[original_position[0]][original_position[1]] = nil
     elsif capture.include?(player_next)
+      binding.pry
       if board[player_next[0]][player_next[1]].team == "w"
         @captured_piece = board[player_next[0]][player_next[1]]
         board[player_next[0]][player_next[1]] = piece
@@ -328,7 +329,10 @@ class Board
   def remaining_pieces(color)
     color == "w" ? @remaining_white : @remaining_black
   end
-  
+  # Note, some moves are not calculated correctly.
+  # is it to do with the @remaining pieces?
+  # The board is not displaying pieces correctly as they 
+  # should be saved after moves.
   def check(board)
     enemy_color = opponent_color
     enemy_pieces = remaining_pieces(enemy_color).clone
@@ -386,6 +390,7 @@ class Board
       end
       save_position = chosen_piece.position
       player_next = calculate_moves(chosen_piece)
+      binding.pry
       capture = capture_by_type(chosen_piece, copy_board)
       execute_move(player_next, chosen_piece, copy_board, capture)
 
@@ -405,6 +410,7 @@ class Board
 
   def in_checkmate?
       remaining_pieces(@player).each do |piece|
+        binding.pry
         original_position = piece.position
         moves = piece.movement(@chessboard)
         capture = capture_by_type(piece, @chessboard)
@@ -412,6 +418,7 @@ class Board
         all_moves = legal_move?(all_moves, piece)
          
         all_moves.each do |move|
+          binding.pry
           copy_board = @chessboard.map(&:clone)
           execute_move(move, piece, copy_board, capture)
           piece.position = original_position
