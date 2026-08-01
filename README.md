@@ -16,7 +16,7 @@ This project is made as the Capstone project from the Ruby course on  ([The Odin
 It demonstrates the author's ability to handle complexity, knowledge and understanding of Ruby fundamentals, and use tests during development.
 The project was made as part of the curriculum, however it is openly shared on Github and also submitted on the "community submissions" part of the page where other learners can view or use it if they wish.
 
-✍️ Authors
+✍️ Author
 My name is Conor, I'm an aspiring web developer with a keen interest in both backend and frontend. You can find more about me on:
 [My website](https://coffee-kiwi.github.io/)
 [LinkedIn](https://www.linkedin.com/in/conor-seo-35a3b299/)
